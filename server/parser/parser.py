@@ -51,7 +51,7 @@ def replacePythonTags(html, output):
   end = html.index("?>") + len("?>")
   return html.replace(html[start:end], output)
 
- # main function of the parser, server will call just this method
+ # main function of the parser, server will only this method
 def parse(htmlContent):
   #check if there are any <?python tags
   if not containsPythonCode(htmlContent):
