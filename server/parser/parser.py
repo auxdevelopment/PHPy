@@ -51,7 +51,7 @@ def replacePythonTags(html, output):
   end = html.index("?>") + len("?>")
   return html.replace(html[start:end], output)
 
- # main function of the parser, server will only this method
+ # main function of the parser, server will only call this method
 def parse(htmlContent):
   #check if there are any <?python tags
   if not containsPythonCode(htmlContent):
@@ -63,11 +63,7 @@ def parse(htmlContent):
 
   #replace OUTPUT_FILE
   out = out.replace("OUTPUT_FILE", "/tmp/out")
-  """
-  tmpScript = open("/tmp/tmpPy.py", "w")
-  tmpScript.write(out)
-  tmpScript.close()
-"""
+  
   os.system("python3 -c '" + out + "'") # runs script
 
   outputFile = open("/tmp/out", "r")
