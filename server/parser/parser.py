@@ -52,7 +52,7 @@ def replacePythonTags(html, output):
   return html.replace(html[start:end], output)
 
  # main function of the parser, server will only call this method
-def parse(htmlContent):
+def parse(htmlContent, path):
   #check if there are any <?python tags
   if not containsPythonCode(htmlContent):
     return htmlContent 
@@ -64,8 +64,8 @@ def parse(htmlContent):
   #replace OUTPUT_FILE
   out = out.replace("OUTPUT_FILE", "/tmp/out")
   
-  os.system("python3 -c '" + out + "'") # runs script
-
+  os.system("cd " + path + " && python3 -c '" + out + "'") # runs script
+  
   outputFile = open("/tmp/out", "r")
   output = outputFile.read()
   outputFile.close()

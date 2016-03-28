@@ -28,7 +28,10 @@ class RequestHandler(BaseHTTPRequestHandler):
       self.end_headers()
       if(self.getMimeType().find("text") != -1):
         contentBytes = self.getContent()
-        content = parser.parse(contentBytes.decode("utf-8"))
+        # pass the path of the file to the parser so he can chdir to it
+        content = parser.parse(contentBytes.decode("utf-8"), self.getPath()) 
+        
+
         self.wfile.write(bytes(content, "utf-8"))
   
       else:
@@ -69,7 +72,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         if self.path.endswith("." + extension):
           return key + "/" + extension
 
-
+  def getPath(self):
+    return os.path.dirname(os.getcwd() + "/html/" + self.path)
 
 def startServer():
     server = HTTPServer(("localhost", 8080), RequestHandler)
