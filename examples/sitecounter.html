@@ -1,0 +1,26 @@
+
+<html>
+
+  <head>
+    <title>Site counter</title> 
+  </head>
+
+  <body>
+<?python
+import os
+
+counterFile = open("counter.txt", "r+")
+counter = int(counterFile.read())
+counter += 1
+print("<h1> Welcome, you are the " + str(counter) + " visitor!</h1>")
+
+counterFile.seek(0)
+counterFile.write(str(counter))
+counterFile.close()
+
+?>
+
+  </body>
+    
+
+</html>
