@@ -22,6 +22,7 @@ import parser
 class RequestHandler(BaseHTTPRequestHandler):
 
   def do_GET(self):
+    print("Client: " + str(self.client_address))
     try:
       self.send_response(200) # http-code: 200 -> OK
       self.send_header("Content-type", self.getMimeType())
@@ -70,10 +71,15 @@ class RequestHandler(BaseHTTPRequestHandler):
     for key in typesDict:
       for extension in typesDict[key]:
         if self.path.endswith("." + extension):
-          return key + "/" + extension
+           return key + "/" + extension
+    return "text/txt" # to avoid NoneType errors
+
 
   def getPath(self):
     return os.path.dirname(os.getcwd() + "/html/" + self.path)
+
+########## End of class section ############
+
 
 def startServer():
     server = HTTPServer(("localhost", 8080), RequestHandler)
