@@ -72,7 +72,7 @@ class RequestHandler(BaseHTTPRequestHandler):
       for extension in typesDict[key]:
         if self.path.endswith("." + extension):
            return key + "/" + extension
-    return "text/txt" # to avoid NoneType errors
+    return "text/html" # to avoid NoneType errors
 
 
   def getPath(self):
@@ -82,8 +82,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 
 def startServer():
-    server = HTTPServer(("localhost", 8080), RequestHandler)
-    print(time.asctime(), "Server started on port 8080")
+    server = HTTPServer(("localhost", 80), RequestHandler)
+    print(time.asctime(), "Server started on port 80")
     
     try:
       server.serve_forever()
