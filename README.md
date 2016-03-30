@@ -23,3 +23,4 @@ Webserver and python parser for using python instead of php.
  </html>
  ```
  - The html files rest under the `server/html` directory
+ - Notice that currently the python tags have to be at the left side of the document! This will probably change in future...
