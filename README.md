@@ -17,9 +17,11 @@ Webserver and python parser for using python instead of php.
 
  ```html
  <html>
+  <body>
  <?python
  print("Put your python code here!")
  ?>
+  </body>
  </html>
  ```
  - The html files rest under the `server/html` directory
