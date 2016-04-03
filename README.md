@@ -5,10 +5,10 @@ Webserver and python parser for using python instead of php.
 #What works
  - Hosting HTML webpages with multimedia content
  - Using python for server-side scripting
+ - multiple python tags in one file
  
 #What doesn't work (yet)
  - using POST and GET values from http session
- - multiple python calls in one file
 
 #Usage
  - Starting server: `$ python3 server.py start`
