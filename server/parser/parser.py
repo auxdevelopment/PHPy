@@ -85,5 +85,8 @@ def parse(htmlContent, path, GET="", POST=""):
   ####End POST section##
 
   output = os.popen("cd " + path + " && python3 -c '" + out + "'").read() # runs script
-  
-  return replacePythonTags(htmlContent, output)
+   
+  result = replacePythonTags(htmlContent, output)
+  if containsPythonCode(result):
+    return parse(result, path)
+  return result
