@@ -16,7 +16,8 @@ template-file = template.py
 template-file insert points:
   - OUTPUT_FILE = the output file used instead of sys.stdout
   - INSERT = the actual code
-
+  - GET = get dictionary
+  - POST = post dictionary
 """
 import re
 import os
@@ -40,10 +41,14 @@ def getPythonCode(htmlContent):
 
 #reads the content of the template.py file
 def loadTemplate():
-  template = open("parser/template.py", "r")
-  content = template.read()
-  template.close()
+  with open("parser/template.py", "r") as template:
+    content = template.read()
   return content
+
+
+def create_GET_Dict(GET): # creates a dictionary out of a passed string
+  pass 
+  
 
 
 def replacePythonTags(html, output):
@@ -52,7 +57,7 @@ def replacePythonTags(html, output):
   return html.replace(html[start:end], output)
 
  # main function of the parser, server will only call this method
-def parse(htmlContent, path):
+def parse(htmlContent, path, GET="", POST=""):
   #check if there are any <?python tags
   if not containsPythonCode(htmlContent):
     return htmlContent 
@@ -61,13 +66,24 @@ def parse(htmlContent, path):
   templateContent = loadTemplate()
   out = templateContent.replace("INSERT", pythonCode)
 
-  #replace OUTPUT_FILE
-  out = out.replace("OUTPUT_FILE", "/tmp/out")
-  
-  os.system("cd " + path + " && python3 -c '" + out + "'") # runs script
-  
-  outputFile = open("/tmp/out", "r")
-  output = outputFile.read()
-  outputFile.close()
 
+  ####GET Section########
+  if GET != "":
+    GET_Dict = create_GET_Dict(GET)
+    out = out.replace("GET", "GET = " + str(GET_Dict))
+  else:
+    out = out.replace("GET", "") # remove get from template
+  ####End GET Section###
+
+  ####POST Section#####
+    if POST != "":
+      POST_Dict = create_POST_Dict(POST)
+      out = out.replace("POST", "POST = " + str(POST_Dict))
+    else:
+      out = out.replace("POST", "") # remove post from template
+
+  ####End POST section##
+
+  output = os.popen("cd " + path + " && python3 -c '" + out + "'").read() # runs script
+  
   return replacePythonTags(htmlContent, output)
